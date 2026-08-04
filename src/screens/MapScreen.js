@@ -15,12 +15,16 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as Location from "expo-location";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
+import MapTabBar from "../components/MapTabBar";
+import ResourcesTab from "../components/ResourcesTab";
 
 export default function MapScreen({ navigation }) {
   const tabBarHeight = useBottomTabBarHeight();
   const insets = useSafeAreaInsets();
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [activeTab, setActiveTab] = useState("");
+
 
   const [currentRegion, setCurrentRegion] = useState({
     latitude: 34.0211573,
@@ -58,7 +62,12 @@ export default function MapScreen({ navigation }) {
         region={currentRegion}
         showsUserLocation={true}
         showsMyLocationButton={true}
-      />
+        />
+
+      <View style={[styles.tabBarOverlay, { paddingTop: insets.top }]}>
+        <MapTabBar activeTab={activeTab} onTabChange={setActiveTab}/>
+        {activeTab === "Resources" ? <ResourcesTab navigation={navigation} /> : null}
+      </View>
 
       <View style={[styles.mapFooter]}>
         <View style={styles.locationContainer}>
@@ -69,7 +78,7 @@ export default function MapScreen({ navigation }) {
               const { latitude, longitude } = location.coords;
               setCurrentRegion({ ...currentRegion, latitude, longitude });
             }}
-          >
+            >
             <Ionicons name="navigate" size={15} color="black" />
           </TouchableOpacity>
         </View>
@@ -78,7 +87,7 @@ export default function MapScreen({ navigation }) {
             onPress={() => {
               navigation.navigate("Event");
             }}
-          >
+            >
             <View style={styles.myBitmoji}>
               <Ionicons name="calendar-outline" size={50} color="gray" />
               <View style={styles.bitmojiTextContainer}>
@@ -91,7 +100,7 @@ export default function MapScreen({ navigation }) {
             <Image
               style={styles.bitmojiImage}
               source={require("../../assets/snapchat/personalBitmoji.png")}
-            />
+              />
             <View style={styles.bitmojiTextContainer}>
               <Text style={styles.bitmojiText}>Places</Text>
             </View>
@@ -100,7 +109,7 @@ export default function MapScreen({ navigation }) {
             <Image
               style={styles.bitmojiImage}
               source={require("../../assets/snapchat/personalBitmoji.png")}
-            />
+              />
             <View style={styles.bitmojiTextContainer}>
               <Text style={styles.bitmojiText}>Friends</Text>
             </View>
@@ -115,8 +124,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+  },
+  tabBarOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
   },
   mapFooter: {
     width: "100%",
