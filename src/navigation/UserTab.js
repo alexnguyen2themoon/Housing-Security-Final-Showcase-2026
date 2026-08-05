@@ -5,7 +5,7 @@ import { View, StyleSheet, Pressable, Text, Button } from "react-native";
 import { supabase } from "../../utils/hooks/supabase";
 // Import the Supabase client
 // Screens
-import MapScreen from "../screens/MapScreen";
+import MapScreen from "../screens/testerScreen";
 import CameraScreen from "../screens/CameraScreen";
 import StoriesScreen from "../screens/StoriesScreen";
 import SpotlightScreen from "../screens/SpotlightScreen";
