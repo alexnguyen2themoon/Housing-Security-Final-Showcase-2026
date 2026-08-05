@@ -1,12 +1,11 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { colors } from "../../assets/themes/colors";
 
 const TABS = ["Resources", "Trending", "Footsteps", "Visited", "Popular", "Favorites", "Restaurants", "Cafes", "Parks", "Shops"];
 
 const TAB_ICONS = {
-  Resources: "briefcase-outline",
   Trending: "trending-up-outline",
   Footsteps: "footsteps-outline",
   Visited: "checkmark-circle-outline",
@@ -34,12 +33,24 @@ export default function MapTabBar({ activeTab, onTabChange }) {
             style={[styles.tab, styles.shadow, isActive && styles.tabActive]}
             onPress={() => onTabChange(tab)}
           >
-            <Ionicons
-              name={TAB_ICONS[tab]}
-              size={16}
-              color={isActive ? "#fff" : colors.primary}
-              style={styles.tabIcon}
-            />
+            {tab === "Resources" ? (
+              <Image
+                source={require("../../assets/snapchat/Group 68.png")}
+                style={[
+                  styles.tabIcon,
+                  styles.resourcesIcon,
+                  isActive && styles.resourcesIconActive,
+                ]}
+                resizeMode="contain"
+              />
+            ) : (
+              <Ionicons
+                name={TAB_ICONS[tab]}
+                size={16}
+                color={isActive ? "#fff" : colors.primary}
+                style={styles.tabIcon}
+              />
+            )}
             <Text style={[styles.tabText, isActive && styles.tabTextActive]}>
               {tab}
             </Text>
@@ -73,6 +84,14 @@ const styles = StyleSheet.create({
   },
   tabIcon: {
     marginRight: 6,
+  },
+  resourcesIcon: {
+    width: 16,
+    height: 16,
+    tintColor: colors.primary,
+  },
+  resourcesIconActive: {
+    tintColor: "#fff",
   },
   tabText: {
     color: colors.primary,

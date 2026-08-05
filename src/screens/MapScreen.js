@@ -66,56 +66,10 @@ export default function MapScreen({ navigation }) {
 
       <View style={[styles.tabBarOverlay, { paddingTop: insets.top }]}>
         <MapTabBar activeTab={activeTab} onTabChange={setActiveTab}/>
-        {activeTab === "Resources" ? <ResourcesTab navigation={navigation} /> : null}
       </View>
 
-      <View style={[styles.mapFooter]}>
-        <View style={styles.locationContainer}>
-          <TouchableOpacity
-            style={[styles.userLocation, styles.shadow]}
-            onPress={() => {
-              console.log("Go to user location!");
-              const { latitude, longitude } = location.coords;
-              setCurrentRegion({ ...currentRegion, latitude, longitude });
-            }}
-            >
-            <Ionicons name="navigate" size={15} color="black" />
-          </TouchableOpacity>
-        </View>
-        <View style={[styles.bitmojiContainer, styles.shadow]}>
-          <Pressable
-            onPress={() => {
-              navigation.navigate("Event");
-            }}
-            >
-            <View style={styles.myBitmoji}>
-              <Ionicons name="calendar-outline" size={50} color="gray" />
-              <View style={styles.bitmojiTextContainer}>
-                <Text style={styles.bitmojiText}>Events</Text>
-              </View>
-            </View>
-          </Pressable>
+      {activeTab === "Resources" ? <ResourcesTab navigation={navigation} /> : null}
 
-          <View style={styles.places}>
-            <Image
-              style={styles.bitmojiImage}
-              source={require("../../assets/snapchat/personalBitmoji.png")}
-              />
-            <View style={styles.bitmojiTextContainer}>
-              <Text style={styles.bitmojiText}>Places</Text>
-            </View>
-          </View>
-          <View style={styles.myFriends}>
-            <Image
-              style={styles.bitmojiImage}
-              source={require("../../assets/snapchat/personalBitmoji.png")}
-              />
-            <View style={styles.bitmojiTextContainer}>
-              <Text style={styles.bitmojiText}>Friends</Text>
-            </View>
-          </View>
-        </View>
-      </View>
     </View>
   );
 }
